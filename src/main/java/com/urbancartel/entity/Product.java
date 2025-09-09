@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
@@ -13,21 +14,27 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Product {
     @Id
 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="name",nullable=false,length=255)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
-    @Column(name="description",length=1000)
+    @Column(name = "description", length = 1000)
     private String description;
-    @Column(name="price",nullable=false)
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
-    @Column(name="stock",nullable=false)
+    @Column(name = "stock", nullable = false)
     private Integer stock;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
+    @Column(name="image_url" , length=1000)
+    private String imageUrl;
+    @ManyToOne(fetch=FetchType.LAZY,optional=false)
+    @JoinColumn(name="supplier_id",nullable=false)
+    private Seller seller;
+
 }

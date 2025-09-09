@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="categories")
+@Table(name="payments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class Payment {
     private Long id;
 
     @OneToOne(fetch=FetchType.LAZY)
-    @Column(name="order_id",nullable=false)
+    @JoinColumn(name = "order_id", nullable = false, unique = true)
     private Order order;
 
     @Column(name="payment_date",nullable=false)
@@ -29,4 +29,9 @@ public class Payment {
 
     @Column(name="payment_method",nullable=false,length=50)
     private String paymentMethod; // e.g., 'CREDIT_CARD', 'PAYPAL',
+
+
+    @Column
+    private String status ;
+
 }

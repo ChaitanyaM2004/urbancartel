@@ -3,6 +3,7 @@ package com.urbancartel.entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Data//getters and setters
 @NoArgsConstructor//ddefault constructor
 @AllArgsConstructor//parameterized constructor
-@Builder//builder pattern
+@SuperBuilder//builder pattern
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Customer extends User {
     @Column(name = "phone_number", length = 15)

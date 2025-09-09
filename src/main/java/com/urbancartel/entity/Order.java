@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="categories")
+@Table(name="orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @Column(name="customer_id",nullable=false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @Column(name="order_date",nullable=false)

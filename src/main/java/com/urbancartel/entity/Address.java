@@ -30,5 +30,4 @@ public class Address {
     private String postalCode;
     @Column(length=50)
     private String country;
-
 }
