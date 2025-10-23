@@ -97,6 +97,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public List<ProductResponse> listAll() {
+        System.out.println("at listall");
         return productRepo.findAll().stream().map(this::toDto).toList();
     }
 

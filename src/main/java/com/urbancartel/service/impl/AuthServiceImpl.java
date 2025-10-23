@@ -1,9 +1,11 @@
 package com.urbancartel.service.impl;
 
 import com.urbancartel.dto.*;
+import com.urbancartel.entity.Admin;
 import com.urbancartel.entity.RefreshToken;
 import com.urbancartel.entity.Seller;
 import com.urbancartel.entity.User;
+import com.urbancartel.repository.AdminRepository;
 import com.urbancartel.repository.RefreshTokenRepository;
 import com.urbancartel.repository.SellerRepository;
 import com.urbancartel.repository.UserRepository;
@@ -17,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +43,8 @@ public class AuthServiceImpl implements AuthService {
     private RefreshTokenService refreshTokenService;
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
 
     @Override
@@ -84,6 +89,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<?> login(AuthRequest request) {
+        System.out.println("login");
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -99,7 +105,6 @@ public class AuthServiceImpl implements AuthService {
                 response.put("refreshToken", refreshToken.getToken());
                 response.put("user",new UserDto(user.getId(),user.getEmail()));
                 response.put("tokenType", "Bearer");
-
                 return ResponseEntity.ok(response);
             } else {
                 throw new UsernameNotFoundException("Invalid user request!");
@@ -129,6 +134,25 @@ public class AuthServiceImpl implements AuthService {
                 })
                 .orElseThrow(() -> new RuntimeException("Refresh token is not in database!"));
     }
+
+//    @Override
+//    public ResponseEntity<?> createAdmin(AdminCreateRequest request) {
+//        System.out.println("AT CA");
+//        if (adminRepository.existsByEmail(request.getEmail())) {
+//            return ResponseEntity.badRequest().body("Admin already exists");
+//        }
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        Admin admin = new Admin();
+//        admin.setFirstname(request.getFirstname());
+//        admin.setLastname(request.getLastname());
+//        admin.setPhoneNumber(request.getPhoneNumber());
+//        admin.setEmail(request.getEmail());
+//        admin.setPassword(encoder.encode(request.getPassword()));
+//        admin.setRoles(request.getRoles());
+//        System.out.println(request.getRoles());
+//        adminRepository.save(admin);
+//        return ResponseEntity.ok("Admin created successfully");
+//    }
 
     @Override
     @PostMapping("/logout")

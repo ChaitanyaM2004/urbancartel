@@ -42,8 +42,6 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         refreshToken = refreshTokenRepository.save(refreshToken);
         return refreshToken;
     }
-
-    ;
     @Override
     @Transactional
     public RefreshToken verifyExpiration(RefreshToken token) {

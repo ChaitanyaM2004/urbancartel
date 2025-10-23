@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -27,14 +28,16 @@ public class User {
     private String password;
     @Column(nullable=false, length = 20, unique = true)
     private String phoneNumber;
-    @Column(length=50)
-    @ManyToMany(fetch=FetchType.EAGER)//fetch eager is used here to load roles fastly when needed for security purposes
-    @JoinTable(
-            name="user_roles",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id")
-    )
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Role> roles;
+
+
+//    @ElementCollection(fetch=FetchType.EAGER)
+//    @CollectionTable(
+//            name="user_roles", // The name of the new join table (can be the same)
+//            joinColumns = @JoinColumn(name="user_id")
+//    )
+//    @Column(name="role_name", nullable = false, length = 50)
+//    @Enumerated(EnumType.STRING) // 👈 Tells JPA to persist the ENUM's name (e.g., "SUPER_ADMIN") as a String
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Set<Roles> roles; // 👈 The type is now the ENUM 'Roles'
 }

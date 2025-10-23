@@ -16,12 +16,12 @@ import java.util.List;
 public class AdminCategoryController {
     private final CategoryRepository categoryRepo;
 
-    @GetMapping
+    @GetMapping()
     public List<Category> list() {
         return categoryRepo.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/addcategory")
     @ResponseStatus(HttpStatus.CREATED)
     public Category create(@RequestBody CreateCategory category) {
         Category c = new Category();
@@ -30,19 +30,19 @@ public class AdminCategoryController {
         return categoryRepo.save(c);
     }
 
-    @PutMapping("/{id}")
-    public Category update(@PathVariable Long id, @RequestBody CreateCategory category) {
-        Category c = categoryRepo.findById(id).orElseThrow(()->new IllegalArgumentException("Category not found"));
+    @PutMapping("updatecategory/{catid}")
+    public Category update(@PathVariable Long catid, @RequestBody CreateCategory category) {
+        Category c = categoryRepo.findById(catid).orElseThrow(()->new IllegalArgumentException("Category not found"));
         c.setName(category.name);
         c.setDescription(category.description);
         return categoryRepo.save(c);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deletecategory/{delid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        if (categoryRepo.findById(id).isEmpty()) throw new IllegalArgumentException("Category not found");
-        categoryRepo.deleteById(id);
+    public void delete(@PathVariable Long delid) {
+        if (categoryRepo.findById(delid).isEmpty()) throw new IllegalArgumentException("Category not found");
+        categoryRepo.deleteById(delid);
     }
 
     @Data

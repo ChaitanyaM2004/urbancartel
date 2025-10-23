@@ -44,6 +44,9 @@ public class Seller extends User {
     @Column(length = 50)
     private String country;
 
+    @Column(nullable=false,length=50)
+    private Roles role;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -53,11 +56,17 @@ public class Seller extends User {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @Column(name = "blocked_reason")
+    private String blockedReason;
+
+    @Column(name = "blocked_At")
+    private LocalDateTime blockedAt;
+
+    @Column(name="unblocked_At")
+    private LocalDateTime unblockedAt;
+
 
     @OneToMany(mappedBy="seller",cascade=CascadeType.ALL , orphanRemoval=true)
-    @ToString.Exclude
+    @ToString.Exclude//since we have used @Data annotation and it generats the toString method and there can b emany products whichj is a sensitive information so i want to exclude the information
     private List<Product> products;
-
-
-
 }

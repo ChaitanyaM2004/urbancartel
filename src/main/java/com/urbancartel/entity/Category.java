@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Category {
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
@@ -23,5 +22,4 @@ public class Category {
 
     @Column(name="description",length=255)
     private String description;
-
 }

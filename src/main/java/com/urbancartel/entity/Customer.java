@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 
 @Entity//marks class as entity
 @Table(name="customers")//sets table name as customers
-@Data//getters and setters
+@Data//getters and setters and more
 @NoArgsConstructor//ddefault constructor
 @AllArgsConstructor//parameterized constructor
-@SuperBuilder//builder pattern
-@PrimaryKeyJoinColumn(name = "user_id")
+@SuperBuilder//for inheritance and builder pattern builder is like u are doing naa person.name().age thats builder but in inheritance we cannt do it like it we have to use suoer builder to access the property of parent class
+@PrimaryKeyJoinColumn(name = "user_id")//parent is user so we r joining with user table using user_id as foreign key
 public class Customer extends User {
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
@@ -42,6 +42,9 @@ public class Customer extends User {
 
     @Column(length = 50)
     private String country;
+
+    @Column(nullable=false,length=50)
+    private Roles role;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

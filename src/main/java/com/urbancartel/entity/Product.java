@@ -34,7 +34,11 @@ public class Product {
     @Column(name="image_url" , length=1000)
     private String imageUrl;
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
+    /*
+       fetchtype.lazy means dont load the seller details unless explicitly requested
+         optional=false means a product must have a seller associated with it
+        fetchtype.eager load everything at the same time
+     */
     @JoinColumn(name="supplier_id",nullable=false)
     private Seller seller;
-
 }

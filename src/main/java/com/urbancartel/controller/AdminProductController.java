@@ -16,11 +16,12 @@ import java.util.List;
 public class AdminProductController {
     private final ProductService productService;
 
-    @PostMapping("/{sellerId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ProductResponse createForSeller(@PathVariable Long sellerId, @Valid @RequestBody ProductRequest req) {
-        return productService.adminCreate(sellerId, req);
-    }
+
+//    @PostMapping("/{sellerId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ProductResponse createForSeller(@PathVariable Long sellerId, @Valid @RequestBody ProductRequest req) {
+//        return productService.adminCreate(sellerId, req);
+//    }
 
     @PutMapping("/{productId}")
     public ProductResponse update(@PathVariable Long productId, @Valid @RequestBody ProductRequest req) {
@@ -31,14 +32,18 @@ public class AdminProductController {
     public void delete(@PathVariable Long productId) {
         productService.adminDelete(productId);
     }
+
+
     @GetMapping
     public List<ProductResponse> listAll() {
         return productService.listAll();
     }
+
     @GetMapping("/{productId}")
     public ProductResponse getOne(@PathVariable Long productId) {
         return productService.getById(productId);
     }
+
 
 
 }
